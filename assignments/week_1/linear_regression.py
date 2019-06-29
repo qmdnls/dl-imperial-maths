@@ -36,7 +36,7 @@ def fit(num_epochs, model, loss_compute, opt):
             loss.backward()
             opt.step()
             opt.zero_grad()
-    print('Training loss: ' + loss_compute(model(inputs), targets)[0])
+    print('Training loss: ', loss_compute(model(inputs), targets))
 
 # Let's train the model for 100 epochs
 fit(100, model, loss_compute, opt)
