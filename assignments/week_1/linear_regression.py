@@ -1,14 +1,15 @@
 import numpy as np
+import pandas as pd
 import torch
 import torch.nn
 import torch.nn.functional as F
 from torch.utils.data import TensorDataset, DataLoader
 
 # Import inputs and targets
-inputs = np.array([[73, 67, 43], [91, 88, 64], [87, 134, 58], [102, 43, 37], [69, 96, 70], [73, 67, 43], [91, 88, 64], [87, 134, 58], [102, 43, 37], [69, 96, 70], [73, 67, 43], [91, 88, 64], [87, 134, 58], [102, 43, 37], [69, 96, 70]], dtype='float32')
-targets = np.array([[56, 70], [81, 101], [119, 133], [22, 37], [103, 119],
-                    [56, 70], [81, 101], [119, 133], [22, 37], [103, 119],
-                    [56, 70], [81, 101], [119, 133], [22, 37], [103, 119]], dtype='float32')
+df = pd.read_csv('poverty.txt', sep='\t')
+
+inputs = df.values[:,2].astype('float32')
+targets = df.values[:,4].astype('float32')
 
 inputs = torch.from_numpy(inputs)
 targets = torch.from_numpy(targets)
@@ -19,7 +20,7 @@ train = TensorDataset(inputs, targets)
 train_dl = DataLoader(train, batch_size, shuffle=True)
 
 # Define model and optimizer
-model = torch.nn.Linear(3, 2)
+model = torch.nn.Linear(1, 1)
 opt = torch.optim.SGD(model.parameters(), lr=1e-5)
 
 # Define our loss function
